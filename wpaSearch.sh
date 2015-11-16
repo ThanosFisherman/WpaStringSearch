@@ -1,26 +1,44 @@
 #!/bin/bash
 
-for b in bin/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
-for b in sbin/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
-for b in lib/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
-for b in usr/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
-for b in dev/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
-for b in usrfs/**/*
-do
-strings -f $b | egrep -i "wpa|psk|generate|md5|md4|sha256|sha1" --color=always
-done
+# loop a folder recusively,
+print_folder_recurse() {
+    for i in "$1"/*
+    do
+        if [ -d "$i" ]; then
+            print_folder_recurse "$i"
+        elif [ -f "$i" ]; then
+           temp="$(strings -f $i | egrep -i "wpa|psk|generatewpa|generatekey|md5|md4|sha256|sha1" --color=always)"
+           if [ -z "$temp" ]; then
+              continue
+           else
+              output="$output\n$temp"
+           fi
+        fi
+    done
+}
+
+
+# try get path from param
+path=""
+output=""
+if [ ! -d "$1" ]
+then
+    echo "No valid path specified"
+    exit 1
+fi
+if [ ! -f ansi2html.sh ]
+then
+    echo "ansi2html.sh must be in the same place as this script"
+fi
+
+path=$1;
+echo "pls wait..."
+print_folder_recurse $path
+
+if [ -z "$output" ]
+then
+    echo "No results :("
+else
+    echo -e "$output"  | sh ansi2html.sh > results.html
+    echo "Successfully outputed results to results.html"
+fi
