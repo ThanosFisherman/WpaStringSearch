@@ -29,6 +29,7 @@ fi
 if [ ! -f ansi2html.sh ]
 then
     echo "ansi2html.sh must be in the same place as this script"
+    exit 1
 fi
 
 path=$1;
