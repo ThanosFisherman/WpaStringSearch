@@ -7,7 +7,7 @@ print_folder_recurse() {
         if [ -d "$i" ]; then
             print_folder_recurse "$i"
         elif [ -f "$i" ]; then
-           temp="$(strings -f $i | egrep -i "wpa|psk|generatewpa|generatekey|md5|md4|sha256|sha1" --color=always)"
+           temp="$(strings -f $i | egrep -i "wpa|psk|generatewpa|generatekey|generate|createkey|createwpa|md5|md4|sha256|sha1" --color=always)"
            if [ -z "$temp" ]; then
               continue
            else
