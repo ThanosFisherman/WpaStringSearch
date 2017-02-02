@@ -1,6 +1,6 @@
 ### Wpa Strings Search ###
 
-A small bash script that will search for suspicious strings inside an unpacked router firmware.
+A simple, small bash script that helps me search for suspicious strings in order to trace possible WPA key generation algorithms included inside an unpacked router firmware.
 
 ### Usage: ###
 
