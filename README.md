@@ -4,10 +4,7 @@ A simple, small bash script that helps me search for suspicious strings in order
 
 ### Usage: ###
 
-
 ```
-#!shell
-
 chmod +x wpaSearch.sh
 chmod +x ansi2html.sh
 
